@@ -1,0 +1,1 @@
+<?php return ['payment_provider'=>env('KUSTORE_PAYMENT_PROVIDER','manual'),'currency'=>env('KUSTORE_CURRENCY','IDR')];
