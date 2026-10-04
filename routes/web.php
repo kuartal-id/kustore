@@ -1,28 +1,5 @@
 <?php
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
-
-Route::get('/',[StoreController::class,'landing'])->name('home');
-Route::get('/login',[AuthController::class,'showLogin'])->name('login');
-Route::post('/login',[AuthController::class,'login']);
-Route::get('/register',[AuthController::class,'showRegister'])->name('register');
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/logout',[AuthController::class,'logout'])->middleware('auth')->name('logout');
-
-Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function(){
-  Route::get('/',[DashboardController::class,'index'])->name('index');
-  Route::get('/store',[DashboardController::class,'editStore'])->name('store');
-  Route::put('/store',[DashboardController::class,'updateStore'])->name('store.update');
-  Route::post('/links',[DashboardController::class,'addLink'])->name('links.add');
-  Route::delete('/links/{link}',[DashboardController::class,'deleteLink'])->name('links.delete');
-  Route::get('/products',[DashboardController::class,'products'])->name('products');
-  Route::post('/products',[DashboardController::class,'createProduct'])->name('products.create');
-  Route::delete('/products/{product}',[DashboardController::class,'deleteProduct'])->name('products.delete');
-  Route::get('/orders',[DashboardController::class,'orders'])->name('orders');
-});
-
-Route::get('/{username}',[StoreController::class,'show'])->where('username','[A-Za-z0-9_.-]+')->name('store.show');
-Route::get('/{username}/product/{product}',[StoreController::class,'product'])->where('username','[A-Za-z0-9_.-]+')->name('store.product');
-Route::post('/{username}/product/{product}/checkout',[StoreController::class,'checkout'])->where('username','[A-Za-z0-9_.-]+')->name('store.checkout');
+use App\Http\Controllers\AuthController;use App\Http\Controllers\StoreController;use App\Http\Controllers\DashboardController;use Illuminate\Support\Facades\Route;
+Route::get('/',[StoreController::class,'landing'])->name('home');Route::get('/login',[AuthController::class,'showLogin'])->name('login');Route::post('/login',[AuthController::class,'login']);Route::get('/register',[AuthController::class,'showRegister'])->name('register');Route::post('/register',[AuthController::class,'register']);Route::post('/logout',[AuthController::class,'logout'])->middleware('auth')->name('logout');
+Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function(){Route::get('/',[DashboardController::class,'index'])->name('index');Route::get('/store',[DashboardController::class,'editStore'])->name('store');Route::put('/store',[DashboardController::class,'updateStore'])->name('store.update');Route::post('/links',[DashboardController::class,'addLink'])->name('links.add');Route::delete('/links/{link}',[DashboardController::class,'deleteLink'])->name('links.delete');Route::get('/products',[DashboardController::class,'products'])->name('products');Route::post('/products',[DashboardController::class,'createProduct'])->name('products.create');Route::delete('/products/{product}',[DashboardController::class,'deleteProduct'])->name('products.delete');Route::get('/orders',[DashboardController::class,'orders'])->name('orders');});
+Route::get('/{username}/product/{product}',[StoreController::class,'product'])->where('username','[A-Za-z0-9_.-]+')->name('store.product');Route::post('/{username}/product/{product}/checkout',[StoreController::class,'checkout'])->where('username','[A-Za-z0-9_.-]+')->name('store.checkout');Route::get('/{username}',[StoreController::class,'show'])->where('username','[A-Za-z0-9_.-]+')->name('store.show');
