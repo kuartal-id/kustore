@@ -9,4 +9,5 @@ class Store extends Model {
  public function user():BelongsTo{return $this->belongsTo(User::class);}
  public function links():HasMany{return $this->hasMany(StoreLink::class)->orderBy('position');}
  public function products():HasMany{return $this->hasMany(Product::class)->where('active',true)->latest();}
+ public function orders():HasMany{return $this->hasMany(Order::class);}
 }
