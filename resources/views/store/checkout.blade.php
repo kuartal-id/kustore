@@ -1,0 +1,4 @@
+@extends('layouts.app')
+@section('content')
+<div class="k-container max-w-2xl py-12"><div class="k-card"><p class="text-xs font-bold uppercase tracking-[.18em] text-[#28a852]">CHECKOUT</p><h1 class="mt-2 text-4xl">Order received</h1><p class="mt-4 text-[#6c7a86]">Order #{{ $order->id }} has been created for {{ $order->currency }} {{ number_format($order->amount,0,',','.') }}.</p><div class="mt-6 rounded-xl bg-[#f7f9f9] p-4 text-sm dark:bg-[#0f1c22]"><p><strong>Payment provider:</strong> {{ $order->payment_provider }}</p><p class="mt-1">Payment is currently a placeholder flow. Kuartal Pay can replace the provider through the payment adapter later.</p></div><a class="k-btn-primary mt-6" href="{{ route('store.show',$store->username) }}">Return to store</a></div></div>
+@endsection
