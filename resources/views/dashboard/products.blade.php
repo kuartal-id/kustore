@@ -1,0 +1,9 @@
+@extends('layouts.app')
+@section('content')
+<div class="k-container py-10">
+<div class="flex items-end justify-between"><div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#28a852]">COMMERCE</p><h1 class="mt-2 text-4xl">Products</h1></div><a href="{{ route('dashboard.index') }}" class="k-btn-outline">Dashboard</a></div>
+<div class="mt-8 grid gap-6 lg:grid-cols-2">
+<div class="k-card"><h2 class="text-xl">Add product</h2><form method="post" action="{{ route('dashboard.products.create') }}" class="mt-5 space-y-3">@csrf<input class="k-input" name="name" placeholder="Product name" required><textarea class="k-input" name="description" placeholder="Description"></textarea><select class="k-input" name="type"><option value="physical">Physical product</option><option value="digital">Digital product</option><option value="service">Service</option></select><input class="k-input" name="price" type="number" min="0" step=".01" placeholder="Price" required><input class="k-input" name="currency" value="IDR" maxlength="3" required><input class="k-input" name="image_url" placeholder="Image URL (optional)"><input class="k-input" name="inventory" type="number" min="0" placeholder="Inventory (leave blank for unlimited)"><button class="k-btn-primary">Add product</button></form></div>
+<div class="space-y-3">@forelse($products as $product)<div class="k-card flex items-center justify-between gap-4"><div><h3>{{ $product->name }}</h3><p class="text-sm text-[#6c7a86]">{{ $product->currency }} {{ number_format($product->price,0,',','.') }} · {{ ucfirst($product->type) }}</p></div><form method="post" action="{{ route('dashboard.products.delete',$product) }}">@csrf @method('DELETE')<button class="text-sm text-red-600">Delete</button></form></div>@empty<div class="k-card text-[#6c7a86]">No products yet.</div>@endforelse</div>
+</div></div>
+@endsection
