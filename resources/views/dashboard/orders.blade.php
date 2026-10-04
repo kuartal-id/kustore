@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('content')
+<div class="k-container py-10"><div class="flex items-end justify-between"><div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#28a852]">COMMERCE</p><h1 class="mt-2 text-4xl">Orders</h1></div><a href="{{ route('dashboard.index') }}" class="k-btn-outline">Dashboard</a></div>
+<div class="mt-8 space-y-3">@forelse($orders as $order)<div class="k-card flex flex-col justify-between gap-3 md:flex-row"><div><h3>#{{ $order->id }} · {{ $order->customer_name }}</h3><p class="text-sm text-[#6c7a86]">{{ $order->customer_email }} · {{ $order->created_at->format('d M Y H:i') }}</p></div><div class="text-right"><p class="font-semibold">{{ $order->currency }} {{ number_format($order->amount,0,',','.') }}</p><p class="text-sm text-[#6c7a86]">{{ ucfirst($order->status) }}</p></div></div>@empty<div class="k-card text-[#6c7a86]">No orders yet.</div>@endforelse</div></div>
+@endsection
