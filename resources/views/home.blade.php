@@ -1,4 +1,26 @@
-@extends('layouts.app')@section('content')
-<section class="relative overflow-hidden"><div class="absolute inset-x-0 top-0 -z-10 h-[680px] bg-[radial-gradient(circle_at_75%_20%,rgba(54,204,100,.15),transparent_28%),radial-gradient(circle_at_15%_15%,rgba(56,182,255,.10),transparent_28%)]"></div>
-<div class="k-container py-24 sm:py-32 lg:py-36"><div class="max-w-5xl"><div class="k-eyebrow">Kuartal ecosystem</div><h1 class="mt-6 text-5xl leading-[1.04] sm:text-7xl lg:text-[82px]">Your store.<br><span class="text-green-500">Your links.<br>Your business.</span></h1><p class="mt-8 max-w-2xl font-sans text-lg leading-8 text-gray-muted sm:text-xl">Build one beautiful home for everything you sell, share and do. Create a KuStore in minutes.</p><div class="mt-10 flex flex-wrap gap-3"><a class="k-btn-primary" href="{{ route('register') }}">Create your KuStore</a><a class="k-btn-outline" href="{{ route('login') }}">Log in</a></div></div>
-<div class="mt-24 grid gap-5 sm:grid-cols-3"><div class="k-card p-7"><div class="k-eyebrow">01</div><h2 class="mt-4 text-xl">One public page</h2><p class="mt-3 text-sm leading-6 text-gray-muted">Profile, links, products and services in one place.</p></div><div class="k-card p-7"><div class="k-eyebrow">02</div><h2 class="mt-4 text-xl">Built to sell</h2><p class="mt-3 text-sm leading-6 text-gray-muted">Create products and receive orders without stitching together multiple tools.</p></div><div class="k-card p-7"><div class="k-eyebrow">03</div><h2 class="mt-4 text-xl">Powered by Kuartal</h2><p class="mt-3 text-sm leading-6 text-gray-muted">The commerce layer of the Kuartal ecosystem, designed for modern builders.</p></div></div></div></section>@endsection
+@extends('layouts.app')
+@section('content')
+<section class="relative overflow-hidden">
+<div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_20%,rgba(54,204,100,.14),transparent_25%),radial-gradient(circle_at_15%_28%,rgba(56,182,255,.10),transparent_28%)]"></div>
+<div class="k-container py-24 sm:py-32 lg:py-36">
+<div class="grid items-center gap-16 lg:grid-cols-[1.1fr_.9fr]">
+<div>
+<div class="k-eyebrow">Kustore by Kuartal</div>
+<h1 class="mt-6 max-w-4xl text-5xl leading-[1.02] sm:text-6xl lg:text-[72px]">Everything you sell.<br><span class="text-green">One place.</span></h1>
+<p class="mt-7 max-w-xl text-lg leading-8 text-muted sm:text-xl">A simple, beautiful storefront for your links, products and business. Built for creators, founders and people building something of their own.</p>
+<div class="mt-9 flex flex-wrap gap-3"><a class="k-btn-primary" href="{{ route('register') }}">Create your Kustore</a><a class="k-btn-outline" href="{{ route('login') }}">Log in</a></div>
+<div class="mt-7 flex items-center gap-3 text-xs font-medium text-muted"><span class="h-2 w-2 rounded-full bg-green"></span> One account. One storefront. Part of Kuartal.</div>
+</div>
+<div class="relative">
+<div class="k-card overflow-hidden p-0">
+<div class="border-b border-border bg-white px-6 py-5"><div class="flex items-center justify-between"><div class="kustore-brand"><span class="kustore-mark">re</span><span class="kustore-word !text-base">Kustore</span></div><span class="text-xs text-muted">Preview</span></div></div>
+<div class="bg-ice p-7 sm:p-9"><div class="mx-auto max-w-sm text-center"><div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-navy font-display text-2xl text-white">K</div><h2 class="mt-4 text-2xl">Your storefront</h2><p class="mt-2 text-sm text-muted">Links, products and everything your audience needs.</p><div class="mt-6 space-y-3"><div class="k-link">Your latest product ↗</div><div class="k-link">Website ↗</div><div class="k-link">Contact ↗</div></div></div></div>
+</div>
+</div>
+</div>
+<div class="mt-24 border-t border-border pt-10">
+<div class="grid gap-8 sm:grid-cols-3"><div><div class="k-eyebrow">01</div><h2 class="mt-4 text-xl">One home</h2><p class="mt-2 text-sm leading-6 text-muted">Put your profile, links, products and services together.</p></div><div><div class="k-eyebrow">02</div><h2 class="mt-4 text-xl">Built to sell</h2><p class="mt-2 text-sm leading-6 text-muted">Turn your audience into customers without juggling multiple tools.</p></div><div><div class="k-eyebrow">03</div><h2 class="mt-4 text-xl">Kuartal ecosystem</h2><p class="mt-2 text-sm leading-6 text-muted">Kustore is part of a growing family of Kuartal products and services.</p></div></div>
+</div>
+</div>
+</section>
+@endsection
