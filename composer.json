@@ -1,12 +1,17 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "kuartal/kustore",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
+    "description": "Kustore by Kuartal: link-in-bio, personal site and lightweight storefront.",
+    "keywords": [
+        "kustore",
+        "kuartal",
+        "storefront",
+        "link-in-bio"
+    ],
+    "license": "proprietary",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "firebase/php-jwt": "^7.2",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0"
@@ -25,7 +30,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -37,16 +45,10 @@
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
-            "@php artisan migrate --force",
-            "npm install --ignore-scripts",
-            "npm run build"
-        ],
-        "dev": [
-            "Composer\\Config::disableProcessTimeout",
-            "@php artisan dev"
+            "@php artisan migrate --force"
         ],
         "test": [
-            "@php artisan config:clear --ansi @no_additional_args",
+            "@php artisan config:clear --ansi",
             "@php artisan test"
         ],
         "post-autoload-dump": [

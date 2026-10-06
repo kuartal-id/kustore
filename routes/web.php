@@ -76,7 +76,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('dashboard.orders.update');
     });
 
-    Route::middleware('admin')->prefix('admin')->group(function () {
+    Route::middleware(['has.store', 'admin'])->prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.index');
         Route::post('/stores/{store:id}/suspend', [AdminController::class, 'toggleSuspend'])->name('admin.stores.suspend');
     });
