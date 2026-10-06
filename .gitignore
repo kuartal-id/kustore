@@ -23,7 +23,7 @@
 /.phpunit.cache
 
 # Local tooling
-/bin/tailwindcss
+/bin/tailwindcss*
 /.idea
 /.vscode
 /.cursor/

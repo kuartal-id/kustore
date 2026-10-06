@@ -1,18 +1,20 @@
-# Kustore root .htaccess
-# Used only when the host forces the repository root to be the web root
-# (e.g. Hostinger public_html = repo). Everything is routed into public/,
-# and every non-public path is denied outright.
+# Kustore root .htaccess (Apache / LiteSpeed)
+#
+# Only matters when the host serves the REPOSITORY ROOT as the web root
+# (Hostinger Git deploy into public_html). Preferred setup is still to point
+# the domain's document root at public/; then this file is never used.
+#
+# Every request is routed into public/. Framework directories and files are
+# refused with 403 as defence in depth.
 
 Options -Indexes -MultiViews
-ServerSignature Off
 
 <IfModule mod_headers.c>
     Header always unset X-Powered-By
-    Header unset X-Powered-By
 </IfModule>
 
-# Deny sensitive files anywhere in the tree
-<FilesMatch "(^\.env.*|^\.git.*|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|.*\.md|.*\.log|.*\.sqlite|\.htaccess|\.editorconfig|\.gitattributes)$">
+# Sensitive files anywhere in the tree
+<FilesMatch "(^\.env|^\.git|composer\.(json|lock)$|package(-lock)?\.json$|^artisan$|phpunit\.xml$|\.md$|\.log$|\.sqlite$|\.sh$|^\.editorconfig$|^\.gitattributes$)">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
@@ -25,12 +27,14 @@ ServerSignature Off
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Block framework/source directories and dotfiles outright (403)
-    RewriteRule ^(\.git|\.github|app|bootstrap|config|database|resources|routes|storage|tests|vendor|node_modules|bin)(/|$) - [F,L,NC]
-    RewriteRule (^|/)\.(?!well-known/) - [F,L]
-    RewriteRule ^(artisan|composer\.(json|lock)|phpunit\.xml|.*\.md|\.env.*)$ - [F,L,NC]
+    # Framework/source directories, dotfiles (except .well-known) -> 403
+    RewriteRule ^(\.git|\.github|app|bootstrap|config|database|resources|routes|tests|vendor|node_modules|bin|docs)(/|$) - [F,L,NC]
+    # Real storage internals -> 403 (public uploads live under /storage/avatars, /storage/products via public/storage)
+    RewriteRule ^storage/(logs|framework|app)(/|$) - [F,L,NC]
+    RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]
+    RewriteRule ^(artisan|composer\.(json|lock)|phpunit\.xml|.+\.md|\.env.*)$ - [F,L,NC]
 
-    # Route everything else into public/
+    # Everything else is served from public/ (public/.htaccess then hands off to index.php)
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
