@@ -1,14 +1,136 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-:root{--navy:#1c3640;--deep:#0b1319;--green:#36cc64;--green-dark:#28a852;--ice:#f1fbff;--muted:#6c7a86;--border:#e1e8ed;--dark:#0f1c22;--dark2:#152730}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ice);color:var(--deep);font-family:'Arial Nova',Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}h1,h2,h3,h4,h5,h6{font-family:'Poppins',Arial,sans-serif;color:var(--navy);font-weight:600;letter-spacing:-.035em}a,button{transition:all .18s ease}
-.k-container{width:100%;max-width:1240px;margin:0 auto;padding:0 24px}
-.kustore-brand{display:inline-flex;align-items:center;gap:10px;color:var(--navy);text-decoration:none;font-family:'Poppins',Arial,sans-serif;font-weight:700;letter-spacing:-.035em}.kustore-word{font-size:20px}.kustore-mark{display:inline-flex;align-items:center;justify-content:center;width:31px;height:31px;border-radius:9px;background:var(--green);color:var(--deep);font-size:15px;font-weight:800;letter-spacing:-.12em;line-height:1}.kustore-mark-small{width:24px;height:24px;border-radius:7px;font-size:12px}.k-nav-link{display:inline-flex;align-items:center;border:0;background:transparent;border-radius:999px;padding:10px 14px;font-family:'Poppins',Arial,sans-serif;font-size:13px;font-weight:500;color:rgba(28,54,64,.78);text-decoration:none}.k-nav-link:hover{background:var(--ice);color:var(--navy)}
-.k-btn-primary{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--green);border-radius:999px;background:var(--green);padding:11px 20px;font-family:'Poppins',Arial,sans-serif;font-size:13px;font-weight:600;color:var(--deep);box-shadow:0 4px 14px rgba(54,204,100,.16);text-decoration:none}.k-btn-primary:hover{background:#45d472;transform:translateY(-2px);box-shadow:0 8px 22px rgba(54,204,100,.22)}
-.k-btn-outline{display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(28,54,64,.2);border-radius:999px;background:#fff;padding:11px 20px;font-family:'Poppins',Arial,sans-serif;font-size:13px;font-weight:500;color:var(--navy)}
-.k-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Poppins',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--green-dark)}.k-eyebrow:before{content:'';width:22px;height:2px;border-radius:2px;background:var(--green)}
-.k-card{border:1px solid var(--border);border-radius:14px;background:#fff;box-shadow:0 2px 12px rgba(11,19,25,.045);transition:transform .18s,box-shadow .18s,border-color .18s}.k-card:hover{box-shadow:0 12px 30px rgba(11,19,25,.08)}
-.k-input{width:100%;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--deep);padding:12px 14px;font-size:14px;outline:none}.k-input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(54,204,100,.12)}
-.k-link{display:block;border:1px solid var(--border);border-radius:12px;background:#fff;padding:15px 20px;text-align:center;font-family:'Poppins',Arial,sans-serif;font-size:14px;font-weight:500;color:var(--navy);box-shadow:0 2px 9px rgba(11,19,25,.04);text-decoration:none}.k-link:hover{border-color:var(--green);transform:translateY(-2px)}
-.dark body{background:var(--dark);color:#f7f9f9}.dark h1,.dark h2,.dark h3,.dark h4,.dark h5,.dark h6{color:#fff}.dark .k-card{border-color:rgba(255,255,255,.1);background:var(--dark2)}.dark .k-input{border-color:rgba(255,255,255,.1);background:var(--dark);color:#fff}
-@media(min-width:768px){.k-container{padding-left:40px;padding-right:40px}}
-@media(min-width:1024px){.k-container{padding-left:48px;padding-right:48px}}
+/*
+ * Kustore design system. Compiled ahead of time with the Tailwind standalone
+ * CLI (bin/build-css.sh) into public/css/app.css, which is committed.
+ * Production needs no Node.js.
+ */
+@import "tailwindcss";
+
+@source "../views";
+@source "../../app";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/poppins-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/poppins-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/poppins-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+
+@theme {
+  --font-sans: "Arial Nova", Arial, Helvetica, sans-serif;
+  --font-display: "Poppins", "Arial Nova", Arial, Helvetica, sans-serif;
+
+  --color-navy: #1C3640;
+  --color-navy-700: #24434F;
+  --color-navy-800: #172D36;
+  --color-navy-900: #11232A;
+  --color-navy-950: #0A161B;
+  --color-green: #36CC64;
+  --color-green-600: #2BB356;
+  --color-green-50: #E9F9EE;
+  --color-ice: #F1FBFF;
+  --color-ink: #000000;
+  --color-line: #DDE8ED;
+  --color-line-strong: #C6D6DD;
+  --color-muted: #5A6F77;
+  --color-muted-dark: #9DB1B9;
+  --color-danger: #C2412D;
+
+  --radius-card: 1.25rem;
+
+  --shadow-card: 0 1px 2px rgb(28 54 64 / 0.04), 0 8px 24px -14px rgb(28 54 64 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(28 54 64 / 0.05), 0 16px 32px -16px rgb(28 54 64 / 0.25);
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; }
+  body {
+    @apply bg-ice font-sans text-navy antialiased;
+  }
+  .dark body { @apply bg-navy-950 text-white; }
+  h1, h2, h3, h4 { @apply font-display tracking-[-0.02em]; }
+  ::selection { background: rgb(54 204 100 / 0.25); }
+  :focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+}
+
+@layer components {
+  .container-k { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+
+  /* Buttons: pill shaped, restrained */
+  .btn {
+    @apply inline-flex h-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full px-5 font-display text-sm font-semibold whitespace-nowrap transition-colors duration-150 select-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-sm { @apply h-9 px-4 text-[13px]; }
+  .btn-lg { @apply h-12 px-6 text-[15px]; }
+  .btn-icon { @apply size-10 px-0; }
+  .btn-primary { @apply bg-navy text-white hover:bg-navy-700 dark:bg-white dark:text-navy dark:hover:bg-ice; }
+  .btn-accent { @apply bg-green text-ink hover:bg-green-600; }
+  .btn-secondary { @apply border border-line-strong bg-white text-navy hover:border-navy/50 dark:border-white/15 dark:bg-white/5 dark:text-white dark:hover:border-white/35; }
+  .btn-ghost { @apply text-navy hover:bg-navy/5 dark:text-white dark:hover:bg-white/10; }
+  .btn-danger { @apply border border-danger/30 bg-white text-danger hover:bg-danger/5 dark:bg-transparent dark:text-[#FF8A75] dark:border-[#FF8A75]/30; }
+
+  .card { @apply rounded-[var(--radius-card)] border border-line bg-white shadow-card dark:border-white/[0.07] dark:bg-navy-900 dark:shadow-none; }
+  .card-pad { @apply p-5 sm:p-6; }
+
+  .eyebrow { @apply font-display text-xs font-semibold tracking-[0.14em] text-muted uppercase dark:text-muted-dark; }
+  .muted { @apply text-muted dark:text-muted-dark; }
+  .divider { @apply border-t border-line dark:border-white/[0.07]; }
+
+  /* Forms */
+  .label { @apply mb-1.5 block font-display text-[13px] font-medium text-navy dark:text-white; }
+  .input {
+    @apply block h-11 w-full rounded-xl border border-line-strong bg-white px-3.5 text-[15px] text-navy placeholder:text-muted/70 transition-colors focus:border-navy focus:ring-4 focus:ring-navy/10 focus:outline-none dark:border-white/15 dark:bg-navy-950 dark:text-white dark:placeholder:text-muted-dark/60 dark:focus:border-white/60 dark:focus:ring-white/10;
+  }
+  textarea.input { @apply h-auto min-h-28 py-3 leading-relaxed; }
+  select.input { @apply appearance-none bg-[length:16px] bg-[right_0.9rem_center] bg-no-repeat pr-10; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235A6F77' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
+  .input-group { @apply flex items-stretch overflow-hidden rounded-xl border border-line-strong bg-white focus-within:border-navy focus-within:ring-4 focus-within:ring-navy/10 dark:border-white/15 dark:bg-navy-950 dark:focus-within:border-white/60; }
+  .input-group > span { @apply flex items-center border-r border-line bg-ice px-3 text-sm text-muted dark:border-white/10 dark:bg-white/5 dark:text-muted-dark; }
+  .input-group > input { @apply h-11 w-full min-w-0 bg-transparent px-3.5 text-[15px] focus:outline-none; }
+  .help { @apply mt-1.5 text-xs text-muted dark:text-muted-dark; }
+  .field-error { @apply mt-1.5 text-xs font-medium text-danger dark:text-[#FF8A75]; }
+  .checkbox { @apply size-4 rounded border-line-strong accent-navy dark:accent-green; }
+
+  .choice { @apply relative flex cursor-pointer flex-col gap-1 rounded-2xl border border-line-strong bg-white p-4 transition-colors hover:border-navy/50 has-[:checked]:border-navy has-[:checked]:ring-1 has-[:checked]:ring-navy dark:border-white/15 dark:bg-navy-950 dark:has-[:checked]:border-green dark:has-[:checked]:ring-green; }
+  .choice input { @apply sr-only; }
+
+  /* Badges */
+  .badge { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-display text-[11px] font-medium whitespace-nowrap; }
+  .badge-neutral { @apply bg-navy/[0.06] text-navy dark:bg-white/10 dark:text-white/85; }
+  .badge-green { @apply bg-green-50 text-[#166B33] dark:bg-green/15 dark:text-green; }
+  .badge-amber { @apply bg-[#FFF4DB] text-[#8A5A00] dark:bg-[#F5B83D]/15 dark:text-[#F5C76B]; }
+  .badge-red { @apply bg-[#FDECE8] text-danger dark:bg-[#FF8A75]/15 dark:text-[#FF8A75]; }
+  .badge-navy { @apply bg-navy text-white dark:bg-white dark:text-navy; }
+
+  .dot { @apply inline-block size-2 rounded-full; }
+
+  .link { @apply font-medium text-navy underline decoration-navy/25 underline-offset-4 hover:decoration-navy dark:text-white dark:decoration-white/30 dark:hover:decoration-white; }
+
+  .flash { @apply flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm; }
+  .flash-ok { @apply border-green/30 bg-green-50 text-[#14532D] dark:border-green/25 dark:bg-green/10 dark:text-green-50; }
+  .flash-error { @apply border-danger/25 bg-[#FDF1EE] text-danger dark:border-[#FF8A75]/25 dark:bg-[#FF8A75]/10 dark:text-[#FFB4A6]; }
+
+  /* Dashboard navigation */
+  .nav-item { @apply flex h-10 items-center gap-3 rounded-xl px-3 font-display text-sm font-medium text-navy/75 transition-colors hover:bg-navy/5 hover:text-navy dark:text-white/70 dark:hover:bg-white/5 dark:hover:text-white; }
+  .nav-item[aria-current="page"] { @apply bg-navy text-white hover:bg-navy hover:text-white dark:bg-white dark:text-navy; }
+  .nav-item-disabled { @apply flex h-10 cursor-not-allowed items-center gap-3 rounded-xl px-3 font-display text-sm font-medium text-navy/40 dark:text-white/30; }
+  .tab-item { @apply flex flex-1 flex-col items-center justify-center gap-1 pt-2 pb-1.5 font-display text-[10.5px] font-medium text-navy/55 dark:text-white/50; }
+  .tab-item[aria-current="page"] { @apply text-navy dark:text-white; }
+  .tab-item[aria-current="page"] .tab-pip { @apply bg-green; }
+
+  .prose-k { @apply text-[15px] leading-relaxed text-navy/85 dark:text-white/80; }
+  .prose-k h2 { @apply mt-8 mb-2 text-lg font-semibold text-navy dark:text-white; }
+  .prose-k p { @apply mb-3; }
+  .prose-k ul { @apply mb-3 list-disc pl-5; }
+
+  /* Pagination (Laravel default markup simplified) */
+  .pager { @apply flex items-center justify-between gap-3 text-sm; }
+}
+
+@layer utilities {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .text-balance { text-wrap: balance; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

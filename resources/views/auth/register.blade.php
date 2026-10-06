@@ -1,1 +1,40 @@
-@extends('layouts.app')@section('content')<div class="k-container flex min-h-[70vh] items-center justify-center"><div class="k-card w-full max-w-md p-8"><div class="k-eyebrow">Get started</div><h1 class="mt-2 text-3xl">Create your Kustore</h1>@if($errors->any())<div class="mt-4 text-sm text-red-600">@foreach($errors->all() as $e)<div>{{ $e }}</div>@endforeach</div>@endif<form method="POST" action="{{ route('register') }}" class="mt-7 space-y-4">@csrf<input class="k-input" name="name" placeholder="Your name" required><input class="k-input" type="email" name="email" placeholder="Email" required><div><input class="k-input" name="username" placeholder="yourname" required><div class="mt-1 text-xs text-gray-muted">kustore.id/<span id="u">yourname</span></div></div><input class="k-input" type="password" name="password" placeholder="Password" required><input class="k-input" type="password" name="password_confirmation" placeholder="Confirm password" required><button class="k-btn-primary w-full">Create Kustore</button></form>@include('auth.oauth-divider')</div></div><script>document.querySelector('[name=username]').oninput=e=>u.textContent=e.target.value||'yourname'</script>@endsection
+@extends('layouts.narrow')
+@section('title', 'Create your Kustore')
+@section('canonical', route('register'))
+
+@section('content')
+<div class="card card-pad sm:p-8">
+    <h1 class="text-2xl font-semibold">Create your Kustore</h1>
+    <p class="mt-2 muted">The fastest way is with your Kuartal ID.</p>
+    <x-kuartal-button class="mt-7 w-full" />
+
+    <div class="my-8 flex items-center gap-3 text-xs muted"><span class="h-px flex-1 bg-line dark:bg-white/10"></span>or sign up with email<span class="h-px flex-1 bg-line dark:bg-white/10"></span></div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-4" novalidate>
+        @csrf
+        <div>
+            <label for="name" class="label">Your name</label>
+            <input id="name" name="name" autocomplete="name" required value="{{ old('name') }}" class="input">
+            <x-field-error name="name" />
+        </div>
+        <div>
+            <label for="email" class="label">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" class="input">
+            <x-field-error name="email" />
+            <p class="help">We will send a link to confirm it before your store can go live.</p>
+        </div>
+        <div>
+            <label for="password" class="label">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" required class="input">
+            <x-field-error name="password" />
+            <p class="help">At least 10 characters, with letters and numbers.</p>
+        </div>
+        <div>
+            <label for="password_confirmation" class="label">Confirm password</label>
+            <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required class="input">
+        </div>
+        <button class="btn btn-secondary w-full">Create account</button>
+    </form>
+</div>
+<p class="mt-6 text-center text-sm muted">Already have an account? <a href="{{ route('login') }}" class="link">Log in</a></p>
+@endsection
