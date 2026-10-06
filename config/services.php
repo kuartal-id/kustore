@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'kuartal_id' => [
+        'issuer' => rtrim((string) env('KUARTAL_ID_ISSUER', 'https://id.kuartal.id'), '/'),
+        'client_id' => env('KUARTAL_ID_CLIENT_ID'),
+        'client_secret' => env('KUARTAL_ID_CLIENT_SECRET'),
+        'redirect' => env('KUARTAL_ID_REDIRECT_URI', 'https://kustore.id/auth/kuartal/callback'),
+        // Only what Kustore needs. "entitlements" is intentionally NOT requested.
+        'scopes' => ['openid', 'profile', 'email'],
+        'cache_ttl' => 3600,
+        'leeway' => 60,
+    ],
+
 ];
