@@ -10,6 +10,10 @@ Kuartal's storefront and creator-commerce platform: link-in-bio + personal site 
 ## Brand rules
 - Always write **Kustore**. Never "KuStore", "Ku Store" or "KUSTORE" in copy. Tagline: "Kustore by Kuartal".
 - Palette: navy `#1C3640`, green `#36CC64` (accent, use sparingly), black `#000000`, ice `#F1FBFF`.
+- Logo: use `<x-wordmark>` (sizes `sm`/`md`/`lg`), never a text wordmark. Files live in `public/images/brand/`: `kustore-logo-light.png` (light mode)
+  and `kustore-logo-dark.png` (dark mode), 320x64 transparent PNGs, shown one at a time with `dark:hidden` / `hidden dark:block`; always `alt="Kustore"` with width/height.
+  Favicon/app icons (`public/favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`) use the green "re" mark; default og:image is `images/brand/kustore-og.png`.
+  The 2000x1000 owner originals are not in the repo; regenerate from them (trim, resize, `pngquant`) rather than upscaling these files.
 - Poppins (self-hosted in `public/fonts`) for headings/UI; body `'Arial Nova', Arial, Helvetica, sans-serif`.
 - Restrained, editorial look: whitespace, rounded cards, pill buttons, subtle shadows. **No** gradients, glowing blobs,
   glassmorphism or heavy animation. Mobile-first; the dashboard must feel native on phones.

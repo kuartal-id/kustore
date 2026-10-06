@@ -19,7 +19,10 @@
     </main>
     <footer class="mt-16 pb-10 text-center">
         <a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-xs font-medium muted hover:border-navy/30 hover:text-navy dark:border-white/10 dark:hover:text-white">
-            Made with <span class="font-display font-semibold text-navy dark:text-white">Kustore</span> · Create yours
+            Made with
+            <img src="{{ asset_v('images/brand/kustore-logo-light.png') }}" alt="Kustore" width="70" height="14" class="h-3.5 w-[70px] max-w-none dark:hidden">
+            <img src="{{ asset_v('images/brand/kustore-logo-dark.png') }}" alt="Kustore" width="70" height="14" class="hidden h-3.5 w-[70px] max-w-none dark:block">
+            · Create yours
         </a>
     </footer>
 </div>

@@ -8,7 +8,12 @@
     <meta property="og:title" content="Kustore by Kuartal">
     <meta property="og:description" content="Your link-in-bio, personal site and shop in one place. Built for Indonesia.">
     <meta property="og:url" content="{{ route('home') }}">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="{{ asset('images/brand/kustore-og.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Kustore">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ asset('images/brand/kustore-og.png') }}">
 @endpush
 
 @section('content')

@@ -29,7 +29,11 @@ with demo data, and all feature tests pass.
 - First-party analytics with daily-rotating visitor hash.
 - Security: CSP without unsafe-inline, HSTS, XFO DENY, nosniff, Referrer/Permissions-Policy, X-Powered-By removed, secure cookies,
   hardened root `.htaccess` (tested on Apache with the repository root as DocumentRoot), no-exec uploads folder.
-- Tests: 86 PHPUnit tests (usernames, OIDC rejection paths, visibility, checkout/stock, policies, headers, uploads, auth).
+- Official Kustore logo (2026-10-06): `public/images/brand/kustore-logo-light.png` / `kustore-logo-dark.png` (320x64, transparent, 2x of the 28px header),
+  rendered by `<x-wordmark>` (header, footer, auth, dashboard, error pages) and the storefront "Made with Kustore" pill, switched by the `.dark` class.
+  Icons from the green "re" mark: `public/favicon.ico` (16/32/48), `favicon-32x32.png`, `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `site.webmanifest`.
+  Default og:image `public/images/brand/kustore-og.png` (1200x630, light logo on ice) on the home page and storefronts without an avatar.
+- Tests: 90 PHPUnit tests (usernames, OIDC rejection paths, visibility, checkout/stock, policies, headers, uploads, auth).
 
 ## Known gaps / stubs
 - **Full sign-in not yet tested end-to-end against the live Kuartal ID IdP.** The client is registered and `/auth/kuartal/redirect` sends a correct authorize request. Still needs a real sign-in.
@@ -41,14 +45,13 @@ with demo data, and all feature tests pass.
 - Customers, Analytics and Payments pages are "Coming soon" (data is already collected in `customers`, `analytics_events`, `payments`).
 - Shipping cost is "arranged by seller" (`shipping_total` is always 0).
 - Terms and Privacy are drafts and need legal review.
-- Logo is a placeholder text wordmark and favicon; no official asset was found in the old repo.
 - Production DB: the old schema is incompatible. The plan is a fresh database (see `DEPLOY.md`). Old data, if any matters, is not migrated.
 
 ## Next steps (priority order)
 1. Owner signs in at https://kustore.id with Kuartal ID, then grants admin on the server: `/opt/alt/php84/usr/bin/php artisan kustore:admin <email>`.
    Then do a test store, a test order and mark it paid.
 2. Configure SMTP (`MAIL_MAILER` is `log` for now); add password reset for email accounts.
-3. Official logo/favicon asset; revoke the old Google OAuth client and the old Kuartal ID / DB credentials, which are considered leaked.
+3. Revoke the old Google OAuth client and the old Kuartal ID / DB credentials, which are considered leaked.
 4. Payment gateway (see Phase 2).
 5. **Phase 2 (payments and customers):** Xendit or Midtrans provider (QRIS, VA, e-wallet) + webhook controller + idempotency;
    Customers page; order notification emails/WhatsApp links; digital download delivery; multiple product images; discount codes.
