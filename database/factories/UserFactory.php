@@ -36,6 +36,19 @@ class UserFactory extends Factory
     /**
      * Indicate that the model's email address should be unverified.
      */
+    public function kuartalId(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'kuartal_id_sub' => (string) Str::uuid(),
+            'password' => null,
+        ]);
+    }
+
+    public function admin(): static
+    {
+        return $this->afterMaking(fn ($user) => $user->is_admin = true);
+    }
+
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
