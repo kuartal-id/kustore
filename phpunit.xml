@@ -19,6 +19,15 @@
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="base64:2BMcOCBgYgubztA043f95oyXMn8IaP737//MmnL6Jpc="/>
+        <env name="APP_URL" value="http://localhost"/>
+        <env name="KUARTAL_ID_ISSUER" value="https://id.kuartal.test"/>
+        <env name="KUARTAL_ID_CLIENT_ID" value="kustore-test-client"/>
+        <env name="KUARTAL_ID_CLIENT_SECRET" value="test-secret"/>
+        <env name="KUARTAL_ID_REDIRECT_URI" value="http://localhost/auth/kuartal/callback"/>
+        <env name="KUARTAL_ID_SCOPES" value="openid profile email"/>
+        <env name="KUSTORE_PAYMENT_PROVIDER" value="manual"/>
+        <env name="FILESYSTEM_DISK" value="public"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>
