@@ -40,8 +40,9 @@ return [
         'client_id' => env('KUARTAL_ID_CLIENT_ID'),
         'client_secret' => env('KUARTAL_ID_CLIENT_SECRET'),
         'redirect' => env('KUARTAL_ID_REDIRECT_URI', 'https://kustore.id/auth/kuartal/callback'),
-        // Only what Kustore needs. "entitlements" is intentionally NOT requested.
-        'scopes' => ['openid', 'profile', 'email'],
+        // Space-separated. Default is only what Kustore needs; add "entitlements"
+        // here once it is registered and advertised by the IdP.
+        'scopes' => array_values(array_filter(explode(' ', (string) env('KUARTAL_ID_SCOPES', 'openid profile email')))),
         'cache_ttl' => 3600,
         'leeway' => 60,
     ],

@@ -31,7 +31,7 @@ class OnboardingController extends Controller
         }
 
         $request->merge(['username' => strtolower(trim((string) $request->input('username')))]);
-        $data = $request->validate(self::usernameRules(), [
+        $data = $request->validate(['username' => self::usernameRules()], [
             'username.unique' => 'That username is already taken.',
         ]);
 
