@@ -82,4 +82,4 @@ The active provider comes from `KUSTORE_PAYMENT_PROVIDER` and is mapped in `conf
 
 See `DEPLOY.md` for Hostinger, `AGENTS.md` for contributor/AI rules, `docs/STATUS.md` for current state.
 
-Logo: there is no official Kustore logo file yet. The text wordmark (`resources/views/components/wordmark.blade.php`) and `public/favicon.svg` are placeholders.
+Logo: the official Kustore logos are in `public/images/brand/` (`kustore-logo-light.png`, `kustore-logo-dark.png`) and rendered by `<x-wordmark>`. Favicon and app icons (`public/favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`) use the green "re" mark.
