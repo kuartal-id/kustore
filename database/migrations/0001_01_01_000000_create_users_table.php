@@ -14,9 +14,16 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            // Not globally unique: Kuartal ID users and local users are separate
+            // identities and are never linked by email. Uniqueness among local
+            // (password) accounts is enforced at registration.
+            $table->string('email')->nullable()->index();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable(); // null for Kuartal ID (SSO) users
+            $table->string('kuartal_id_sub')->nullable()->unique();
+            $table->string('avatar_url', 2048)->nullable();
+            $table->boolean('is_admin')->default(false);
+            $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
