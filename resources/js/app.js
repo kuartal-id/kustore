@@ -1,1 +1,0 @@
-document.addEventListener('DOMContentLoaded',()=>{const r=document.documentElement;if(localStorage.getItem('kuartal-theme')==='dark')r.classList.add('dark');document.querySelectorAll('[data-theme-toggle]').forEach(b=>b.onclick=()=>{r.classList.toggle('dark');localStorage.setItem('kuartal-theme',r.classList.contains('dark')?'dark':'light')})});

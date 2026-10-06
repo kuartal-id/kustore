@@ -1,1 +1,0 @@
-<?php namespace App\Models;use Illuminate\Database\Eloquent\Model;class Product extends Model{protected $fillable=['store_id','name','slug','description','type','price','currency','image_url','active','inventory'];protected $casts=['price'=>'decimal:2','active'=>'boolean'];}
