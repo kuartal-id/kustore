@@ -1,0 +1,38 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+/auth.json
+/storage/*.key
+
+# Dependencies (installed on the server via composer)
+/vendor
+/node_modules
+
+# Runtime / generated
+/public/storage
+/public/hot
+/public/build
+/storage/logs/*
+!/storage/logs/.gitignore
+/storage/pail
+/database/*.sqlite
+/database/*.sqlite-journal
+*.log
+.phpunit.result.cache
+/.phpunit.cache
+
+# Local tooling
+/bin/tailwindcss
+/.idea
+/.vscode
+/.cursor/
+/.codex
+/.zed
+/.nova
+.phpactor.json
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+.DS_Store
+Thumbs.db

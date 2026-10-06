@@ -1,0 +1,36 @@
+# Kustore root .htaccess
+# Used only when the host forces the repository root to be the web root
+# (e.g. Hostinger public_html = repo). Everything is routed into public/,
+# and every non-public path is denied outright.
+
+Options -Indexes -MultiViews
+ServerSignature Off
+
+<IfModule mod_headers.c>
+    Header always unset X-Powered-By
+    Header unset X-Powered-By
+</IfModule>
+
+# Deny sensitive files anywhere in the tree
+<FilesMatch "(^\.env.*|^\.git.*|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|.*\.md|.*\.log|.*\.sqlite|\.htaccess|\.editorconfig|\.gitattributes)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block framework/source directories and dotfiles outright (403)
+    RewriteRule ^(\.git|\.github|app|bootstrap|config|database|resources|routes|storage|tests|vendor|node_modules|bin)(/|$) - [F,L,NC]
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    RewriteRule ^(artisan|composer\.(json|lock)|phpunit\.xml|.*\.md|\.env.*)$ - [F,L,NC]
+
+    # Route everything else into public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
