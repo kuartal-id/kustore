@@ -32,6 +32,7 @@ with demo data, and all feature tests pass.
 - Official Kustore logo (2026-10-06): `public/images/brand/kustore-logo-light.png` / `kustore-logo-dark.png` (320x64, transparent, 2x of the 28px header),
   rendered by `<x-wordmark>` (header, footer, auth, dashboard, error pages) and the storefront "Made with Kustore" pill, switched by the `.dark` class.
   Icons from the green "re" mark: `public/favicon.ico` (16/32/48), `favicon-32x32.png`, `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `site.webmanifest`.
+  2026-10-15: app icons (favicon.ico, favicon-32x32, apple-touch-icon, icon-192/512) replaced with the owner's new Kustore app-icon artwork (shopping bag + Kuartal mark); `asset_v()` cache-busts them by mtime.
   Default og:image `public/images/brand/kustore-og.png` (1200x630, light logo on ice) on the home page and storefronts without an avatar.
 - Tests: 90 PHPUnit tests (usernames, OIDC rejection paths, visibility, checkout/stock, policies, headers, uploads, auth).
 
