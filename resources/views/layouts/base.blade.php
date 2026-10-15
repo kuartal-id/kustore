@@ -13,7 +13,7 @@
     <link rel="icon" href="{{ asset_v('favicon.ico') }}" sizes="16x16 32x32 48x48">
     <link rel="icon" href="{{ asset_v('favicon-32x32.png') }}" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="{{ asset_v('apple-touch-icon.png') }}" sizes="180x180">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link rel="manifest" href="{{ asset_v('site.webmanifest') }}">
     <link rel="preload" href="{{ asset('fonts/poppins-latin-600-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ asset_v('css/app.css') }}">
     <script src="{{ asset_v('js/theme.js') }}"></script>
