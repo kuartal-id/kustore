@@ -1,0 +1,27 @@
+{
+  "name": "kustore-mobile",
+  "private": true,
+  "description": "Capacitor Android/iOS app for Kustore (https://kustore.id)",
+  "scripts": {
+    "sync": "cap sync && node scripts/patch-native.mjs",
+    "add:android": "cap add android && node scripts/patch-native.mjs",
+    "add:ios": "cap add ios && node scripts/patch-native.mjs",
+    "apk:debug": "npm run sync && cd android && ./gradlew assembleDebug",
+    "aab:release": "npm run sync && cd android && ./gradlew bundleRelease",
+    "open:android": "cap open android",
+    "open:ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/core": "^7.4.0",
+    "@capacitor/ios": "^7.4.0",
+    "@capacitor/network": "^7.0.0",
+    "@capacitor/share": "^7.0.0",
+    "@capacitor/splash-screen": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.0"
+  }
+}

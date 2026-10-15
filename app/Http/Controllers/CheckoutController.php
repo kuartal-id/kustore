@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Notifications\NewOrderNotification;
+use App\Notifications\OrderReceivedNotification;
 use App\Services\CheckoutService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 
@@ -38,8 +42,23 @@ class CheckoutController extends Controller
         ]);
 
         [$order] = $checkout->placeOrder($product, $data);
+        $this->sendOrderEmails($order->load('items', 'store.user'));
 
         return redirect()->to(URL::signedRoute('checkout.confirmation', [$store->username, $order->number]));
+    }
+
+    /** Emails never block a sale: if mail is down, the order still stands and the seller sees it in the dashboard. */
+    private function sendOrderEmails(Order $order): void
+    {
+        try {
+            $seller = $order->store->user;
+            if ($order->store->notify_new_orders && $seller?->email) {
+                $seller->notify(new NewOrderNotification($order));
+            }
+            Notification::route('mail', $order->customer_email)->notify(new OrderReceivedNotification($order));
+        } catch (\Throwable $e) {
+            Log::warning('checkout.order_email_failed', ['order' => $order->number, 'message' => $e->getMessage()]);
+        }
     }
 
     public function confirmation(string $username, string $number): View

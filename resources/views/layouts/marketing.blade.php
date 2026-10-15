@@ -8,6 +8,8 @@
             <nav class="flex items-center gap-1 sm:gap-2" aria-label="Main">
                 <a href="{{ route('home') }}#how-it-works" class="btn btn-ghost btn-sm hidden md:inline-flex">How it works</a>
                 <a href="{{ route('home') }}#for-indonesia" class="btn btn-ghost btn-sm hidden md:inline-flex">Payments</a>
+                <a href="{{ route('home') }}#app" class="btn btn-ghost btn-sm hidden lg:inline-flex">App</a>
+                <a href="{{ route('support') }}" class="btn btn-ghost btn-sm hidden md:inline-flex">Help</a>
                 <x-theme-toggle />
                 @auth
                     <a href="{{ route('dashboard') }}" class="btn btn-primary btn-sm">Dashboard</a>
@@ -20,6 +22,9 @@
     </header>
 
     <main id="main" class="flex-1">
+        @if (session('status'))
+            <div class="container-k pt-6"><x-flash /></div>
+        @endif
         @yield('content')
     </main>
 
@@ -30,6 +35,8 @@
                 <p class="muted text-sm">One person. One identity. One storefront.</p>
             </div>
             <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm muted" aria-label="Footer">
+                <a href="{{ route('support') }}" class="hover:text-navy dark:hover:text-white">Help</a>
+                <a href="{{ route('home') }}#app" class="hover:text-navy dark:hover:text-white">Get the app</a>
                 <a href="{{ route('terms') }}" class="hover:text-navy dark:hover:text-white">Terms</a>
                 <a href="{{ route('privacy') }}" class="hover:text-navy dark:hover:text-white">Privacy</a>
                 <a href="https://kuartal.id" class="hover:text-navy dark:hover:text-white" rel="noopener">Kuartal</a>

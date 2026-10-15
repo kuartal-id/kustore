@@ -11,7 +11,12 @@
         ['dashboard.products.index', 'Products', 'package', 'dashboard.products.*'],
         ['dashboard.orders.index', 'Orders', 'receipt', 'dashboard.orders.*'],
     ];
-    $soon = [['Customers', 'users'], ['Analytics', 'chart-column'], ['Payments', 'credit-card']];
+    $more = [
+        ['dashboard.customers.index', 'Customers', 'users', 'dashboard.customers.*'],
+        ['dashboard.analytics', 'Analytics', 'chart-column', 'dashboard.analytics'],
+        ['dashboard.payments.edit', 'Payments', 'credit-card', 'dashboard.payments.*'],
+        ['dashboard.settings', 'Settings', 'settings', 'dashboard.settings*'],
+    ];
 @endphp
 
 @section('body')
@@ -32,14 +37,15 @@
             @foreach ($nav as [$route, $label, $icon, $pattern])
                 <a href="{{ route($route) }}" class="nav-item" @if (request()->routeIs($pattern)) aria-current="page" @endif>{{ icon($icon, 'size-[18px]') }}{{ $label }}</a>
             @endforeach
-            <p class="px-3 pt-6 pb-2 eyebrow">Coming soon</p>
-            @foreach ($soon as [$label, $icon])
-                <span class="nav-item-disabled" aria-disabled="true">{{ icon($icon, 'size-[18px]') }}{{ $label }}<span class="badge badge-neutral ml-auto">Soon</span></span>
+            <p class="px-3 pt-6 pb-2 eyebrow">Business</p>
+            @foreach ($more as [$route, $label, $icon, $pattern])
+                <a href="{{ route($route) }}" class="nav-item" @if (request()->routeIs($pattern)) aria-current="page" @endif>{{ icon($icon, 'size-[18px]') }}{{ $label }}</a>
             @endforeach
             @if (auth()->user()->is_admin)
                 <a href="{{ route('admin.index') }}" class="nav-item mt-4" @if (request()->routeIs('admin.*')) aria-current="page" @endif>{{ icon('shield', 'size-[18px]') }}Admin</a>
             @endif
         </nav>
+        <div class="px-4 pb-3"><a href="{{ route('support') }}" class="nav-item">{{ icon('circle-help', 'size-[18px]') }}Help</a></div>
         <div class="flex items-center gap-1 border-t border-line p-4 dark:border-white/[0.06]">
             <a href="{{ $store->url() }}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm flex-1 justify-start">{{ icon('external-link', 'size-4') }} View store</a>
             <x-theme-toggle />
@@ -67,9 +73,10 @@
                 <div class="min-w-0"><p class="truncate font-display font-semibold">{{ $store->display_name }}</p><p class="text-sm muted">kustore.id/{{ $store->username }}</p></div>
             </div>
             <nav class="space-y-1 border-t border-line pt-3 dark:border-white/10">
-                @foreach ($soon as [$label, $icon])
-                    <span class="nav-item-disabled">{{ icon($icon, 'size-[18px]') }}{{ $label }}<span class="badge badge-neutral ml-auto">Soon</span></span>
+                @foreach ($more as [$route, $label, $icon, $pattern])
+                    <a href="{{ route($route) }}" class="nav-item" @if (request()->routeIs($pattern)) aria-current="page" @endif>{{ icon($icon, 'size-[18px]') }}{{ $label }}</a>
                 @endforeach
+                <a href="{{ route('support') }}" class="nav-item">{{ icon('circle-help', 'size-[18px]') }}Help</a>
                 @if (auth()->user()->is_admin)
                     <a href="{{ route('admin.index') }}" class="nav-item">{{ icon('shield', 'size-[18px]') }}Admin</a>
                 @endif

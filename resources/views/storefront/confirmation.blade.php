@@ -25,7 +25,18 @@
     <div class="card card-pad mt-4">
         <h2 class="flex items-center gap-2 text-base font-semibold">{{ icon('credit-card', 'size-[18px]') }} How to pay</h2>
         <div class="mt-3 rounded-2xl bg-ice p-4 text-[15px] leading-relaxed whitespace-pre-line dark:bg-white/5">{{ $instructions ?: 'The seller will contact you with payment details.' }}</div>
+        @if ($store->qrisUrl())
+            <div class="mt-4 rounded-2xl border border-line p-4 text-center dark:border-white/[0.07]">
+                <p class="flex items-center justify-center gap-2 font-display text-sm font-semibold">{{ icon('qr-code', 'size-4') }} Scan to pay with QRIS</p>
+                <img src="{{ $store->qrisUrl() }}" alt="QRIS code for {{ $store->display_name }}" class="mx-auto mt-3 aspect-square w-full max-w-[260px] rounded-xl bg-white object-contain">
+                <p class="mt-2 text-xs muted">Pay exactly {{ $order->formattedTotal() }}.</p>
+            </div>
+        @endif
         <p class="mt-3 text-sm muted">Include your order number <strong class="text-navy dark:text-white">{{ $order->number }}</strong> with your payment. The seller confirms payments manually.</p>
+        @if ($wa = $store->whatsappUrl('Hi '.$store->display_name.', here is my payment proof for order '.$order->number.' ('.$order->formattedTotal().').'))
+            <a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-accent mt-4 w-full">{{ icon('whatsapp', 'size-4') }} Send payment proof on WhatsApp</a>
+        @endif
+        <p class="mt-3 text-xs muted">We've also emailed these details to {{ $order->customer_email }}.</p>
     </div>
 
     <div class="card mt-4">

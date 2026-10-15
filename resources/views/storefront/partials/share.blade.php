@@ -12,6 +12,7 @@
 <div id="share" class="scroll-mt-20">
     <p class="eyebrow">Share</p>
     <div class="mt-3 flex flex-wrap items-center gap-2">
+        <button type="button" class="btn btn-secondary btn-sm" data-native-share data-share-url="{{ $shareUrl }}" data-share-title="{{ $text }}" hidden>{{ icon('share-2', 'size-4') }} Share</button>
         <button type="button" class="btn btn-secondary btn-sm" data-copy="{{ $shareUrl }}">{{ icon('copy', 'size-4') }}<span data-copy-label>Copy link</span></button>
         @foreach ($targets as [$icon, $label, $href])
             <a href="{{ $href }}" target="_blank" rel="noopener nofollow" class="btn btn-secondary btn-icon size-9" aria-label="Share on {{ $label }}" title="{{ $label }}">{{ icon($icon, 'size-4') }}</a>

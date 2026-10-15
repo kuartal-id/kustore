@@ -8,9 +8,11 @@
 <h2>Your account</h2>
 <p>You are responsible for your account and for everything published on your Kustore. One person or organisation may hold one store.</p>
 <h2>Selling on Kustore</h2>
-<p>Sellers are responsible for their products, prices, delivery and customer service. During the MVP, payments are made directly between buyer and seller using the seller's manual payment instructions; Kuartal does not hold funds.</p>
+<p>Sellers are responsible for their products, prices, delivery and customer service. Payments are currently made directly between buyer and seller using the seller's own payment instructions; Kuartal does not hold funds. When online payments are added, their terms will be shown before you turn them on.</p>
 <h2>Acceptable use</h2>
 <ul><li>No illegal, misleading or harmful products or content.</li><li>No impersonation. Reserved and official names may be withheld.</li><li>We may suspend stores that break these rules.</li></ul>
+<h2>Deleting your account</h2>
+<p>You can delete your account at any time in Settings.</p>
 <h2>Contact</h2>
-<p>Questions: hello@kustore.id (placeholder).</p>
+<p>Questions: <a href="mailto:{{ config('kustore.support_email') }}" class="link">{{ config('kustore.support_email') }}</a>.</p>
 @endsection

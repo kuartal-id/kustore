@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset_v('css/app.css') }}">
     <script src="{{ asset_v('js/theme.js') }}"></script>
     <script src="{{ asset_v('js/app.js') }}" defer></script>
+    <script src="{{ asset_v('js/native.js') }}" defer></script>
 </head>
 <body class="@yield('body_class', 'min-h-dvh')">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 btn btn-primary btn-sm">Skip to content</a>

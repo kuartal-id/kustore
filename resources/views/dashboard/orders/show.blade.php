@@ -33,7 +33,7 @@
                     @if ($order->customer_phone)
                         {{ $order->customer_phone }}
                         @php $wa = preg_replace('/\D/', '', preg_replace('/^0/', '62', $order->customer_phone)); @endphp
-                        <a href="https://wa.me/{{ $wa }}" target="_blank" rel="noopener" class="link ml-1">WhatsApp</a>
+                        <a href="https://wa.me/{{ $wa }}?text={{ rawurlencode('Hi '.str($order->customer_name)->before(' ').', this is '.$store->display_name.' about your order '.$order->number.' ('.$order->formattedTotal().').') }}" target="_blank" rel="noopener" class="link ml-1">WhatsApp</a>
                     @else — @endif
                 </dd></div>
                 @if ($order->shipping_address)

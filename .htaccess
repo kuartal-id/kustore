@@ -28,7 +28,7 @@ Options -Indexes -MultiViews
     RewriteEngine On
 
     # Framework/source directories, dotfiles (except .well-known) -> 403
-    RewriteRule ^(\.git|\.github|app|bootstrap|config|database|resources|routes|tests|vendor|node_modules|bin|docs)(/|$) - [F,L,NC]
+    RewriteRule ^(\.git|\.github|app|bootstrap|config|database|resources|routes|tests|vendor|node_modules|bin|docs|mobile|screens)(/|$) - [F,L,NC]
     # Real storage internals -> 403 (public uploads live under /storage/avatars, /storage/products via public/storage)
     RewriteRule ^storage/(logs|framework|app)(/|$) - [F,L,NC]
     RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]

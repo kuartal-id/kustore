@@ -24,6 +24,7 @@
             </div>
         </div>
         <div class="flex flex-wrap gap-2">
+            <button type="button" class="btn btn-secondary btn-sm" data-native-share data-share-url="{{ $url }}" data-share-title="{{ $store->display_name }} on Kustore" hidden>{{ icon('share-2', 'size-4') }} Share</button>
             <button type="button" class="btn btn-secondary btn-sm" data-copy="{{ $url }}">{{ icon('copy', 'size-4') }}<span data-copy-label>Copy link</span></button>
             <form method="POST" action="{{ route('dashboard.publish') }}">
                 @csrf
@@ -99,6 +100,7 @@
                 ['Add a photo or logo', (bool) $store->avatar_path],
                 ['Add your first link', $linksCount > 0],
                 ['Add your first product', $activeProducts > 0],
+                ['Set up how you get paid', (bool) ($store->payment_instructions || $store->payment_qris_path)],
                 ['Publish your store', $store->is_published],
             ];
             $done = collect($steps)->where(1, true)->count();

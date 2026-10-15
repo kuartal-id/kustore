@@ -1,0 +1,14 @@
+node_modules/
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/app/release/
+*.keystore
+*.jks
+android/app/google-services.json
+ios/App/App/GoogleService-Info.plist
+ios/App/Pods/
+ios/DerivedData/
+*.apk
+*.aab

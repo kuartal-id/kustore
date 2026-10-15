@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /onboarding
+
+Sitemap: https://kustore.id/sitemap.xml

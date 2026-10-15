@@ -15,6 +15,9 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
+    /** Main photo plus up to five more. */
+    public const MAX_IMAGES = 6;
+
     public function index(Request $request): View
     {
         $store = $request->user()->store;
@@ -53,7 +56,7 @@ class ProductController extends Controller
     {
         $this->authorize('update', $product);
 
-        return view('dashboard.products.form', ['store' => $request->user()->store, 'product' => $product->load('mainImage')]);
+        return view('dashboard.products.form', ['store' => $request->user()->store, 'product' => $product->load('mainImage', 'images')]);
     }
 
     public function update(Request $request, Product $product, ImageUploader $uploader): RedirectResponse
@@ -105,6 +108,11 @@ class ProductController extends Controller
             'requires_shipping' => ['nullable', 'boolean'],
             'image' => ['nullable', 'file', ...ImageUploader::rules()],
             'remove_image' => ['nullable', 'boolean'],
+            'images' => ['nullable', 'array', 'max:'.(self::MAX_IMAGES - 1)],
+            'images.*' => ['file', ...ImageUploader::rules()],
+            'remove_images' => ['nullable', 'array'],
+            'remove_images.*' => ['integer'],
+            'main_image_id' => ['nullable', 'integer'],
         ], ['sale_price.lt' => 'The sale price must be lower than the regular price.']);
 
         $data['currency'] = $currency;
@@ -116,7 +124,7 @@ class ProductController extends Controller
             ? $request->boolean('requires_shipping')
             : ProductType::from($data['type'])->requiresShippingByDefault();
         $data['stock_quantity'] = $data['unlimited_stock'] ? null : (int) ($data['stock_quantity'] ?? 0);
-        unset($data['image'], $data['remove_image']);
+        unset($data['image'], $data['remove_image'], $data['images'], $data['remove_images'], $data['main_image_id']);
 
         return $data;
     }
@@ -136,6 +144,38 @@ class ProductController extends Controller
         } elseif ($request->boolean('remove_image') && $current) {
             $uploader->delete($current->path);
             $current->delete();
+        }
+
+        // Remove extra photos (only this product's).
+        $remove = array_map('intval', (array) $request->input('remove_images', []));
+        if ($remove) {
+            foreach ($product->images()->whereKey($remove)->get() as $image) {
+                $uploader->delete($image->path);
+                $image->delete();
+            }
+        }
+
+        // Add more photos, never past the limit.
+        $room = self::MAX_IMAGES - $product->images()->count();
+        foreach (array_slice((array) $request->file('images', []), 0, max(0, $room)) as $file) {
+            $product->images()->create([
+                'path' => $uploader->store($file, 'products'),
+                'alt' => $product->name,
+                'is_main' => false,
+                'position' => (int) $product->images()->max('position') + 1,
+            ]);
+        }
+
+        // Choose which photo is the main one.
+        $mainId = (int) $request->input('main_image_id');
+        if ($mainId && $product->images()->whereKey($mainId)->exists()) {
+            $product->images()->update(['is_main' => false]);
+            $product->images()->whereKey($mainId)->update(['is_main' => true, 'position' => 0]);
+        }
+
+        // Always keep exactly one main photo when there are photos.
+        if (! $product->images()->where('is_main', true)->exists() && ($first = $product->images()->first())) {
+            $first->update(['is_main' => true]);
         }
     }
 }
