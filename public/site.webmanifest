@@ -3,7 +3,7 @@
   "short_name": "Kustore",
   "description": "Kustore by Kuartal. Your link-in-bio, personal site and shop in one place.",
   "start_url": "/",
-  "display": "browser",
+  "display": "standalone",
   "background_color": "#F1FBFF",
   "theme_color": "#F1FBFF",
   "icons": [

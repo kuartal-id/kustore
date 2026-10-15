@@ -20,7 +20,7 @@
             'seller' => ['@type' => 'Organization', 'name' => $store->display_name],
         ],
     ];
-    if ($product->imageUrl()) { $ld['image'] = [$product->imageUrl()]; }
+    if ($product->imageUrl()) { $ld['image'] = $product->images->sortByDesc('is_main')->map->url()->values()->all() ?: [$product->imageUrl()]; }
     if ($product->sku) { $ld['sku'] = $product->sku; }
 @endphp
 @section('title', $title)
@@ -37,11 +37,24 @@
 @section('content')
 <div class="mx-auto max-w-5xl px-4 pt-2 sm:px-6">
     <div class="grid gap-6 md:grid-cols-2 md:gap-10 lg:gap-14">
-        <div class="self-start overflow-hidden rounded-[24px] border md:sticky md:top-6 border-line bg-white dark:border-white/[0.07] dark:bg-navy-900">
+        @php $gallery = $product->images->sortByDesc('is_main')->values(); @endphp
+        <div class="self-start md:sticky md:top-6">
+        <div class="overflow-hidden rounded-[24px] border border-line bg-white dark:border-white/[0.07] dark:bg-navy-900">
             @if ($product->imageUrl())
-                <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="aspect-square w-full object-cover">
+                <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="aspect-square w-full object-cover" data-gallery-main>
             @else
                 <div class="grid aspect-square place-items-center bg-ice text-navy/25 dark:bg-white/5 dark:text-white/20">{{ icon('shopping-bag', 'size-14') }}</div>
+            @endif
+        </div>
+
+            @if ($gallery->count() > 1)
+                <div class="mt-3 grid grid-cols-6 gap-2" aria-label="More photos">
+                    @foreach ($gallery as $img)
+                        <button type="button" class="overflow-hidden rounded-xl border border-line aria-pressed:ring-2 aria-pressed:ring-navy dark:border-white/10 dark:aria-pressed:ring-white" data-gallery-thumb="{{ $img->url() }}" aria-label="Show photo {{ $loop->iteration }}" @if ($loop->first) aria-pressed="true" @else aria-pressed="false" @endif>
+                            <img src="{{ $img->url() }}" alt="" class="aspect-square w-full object-cover" loading="lazy">
+                        </button>
+                    @endforeach
+                </div>
             @endif
         </div>
 

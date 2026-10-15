@@ -4,15 +4,21 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\KuartalIdController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Dashboard\AnalyticsController;
+use App\Http\Controllers\Dashboard\CustomerController;
 use App\Http\Controllers\Dashboard\LinkController;
 use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\OverviewController;
+use App\Http\Controllers\Dashboard\PaymentController;
+use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\StoreController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StorefrontController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +26,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/support', [PageController::class, 'support'])->name('support');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+// iOS Universal Links for the Kustore app. Android's assetlinks.json is a static file in public/.well-known.
+Route::get('/.well-known/apple-app-site-association', fn () => response()->file(
+    resource_path('well-known/apple-app-site-association.json'),
+    ['Content-Type' => 'application/json'],
+))->name('well-known.apple-app-site-association');
 
 // Kuartal ID (primary sign-in)
 Route::middleware('throttle:oidc')->group(function () {
@@ -33,6 +47,11 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store'])->middleware('throttle:login');
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
     Route::post('/register', [RegisterController::class, 'store'])->middleware('throttle:register');
+
+    Route::get('/forgot-password', [PasswordResetController::class, 'request'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetController::class, 'email'])->middleware('throttle:login')->name('password.email');
+    Route::get('/reset-password/{token}', [PasswordResetController::class, 'edit'])->name('password.reset');
+    Route::post('/reset-password', [PasswordResetController::class, 'update'])->middleware('throttle:login')->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
@@ -74,6 +93,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/orders', [OrderController::class, 'index'])->name('dashboard.orders.index');
         Route::get('/orders/{order}', [OrderController::class, 'show'])->name('dashboard.orders.show');
         Route::patch('/orders/{order}', [OrderController::class, 'update'])->name('dashboard.orders.update');
+
+        Route::get('/customers', [CustomerController::class, 'index'])->name('dashboard.customers.index');
+        Route::get('/customers/export', [CustomerController::class, 'export'])->name('dashboard.customers.export');
+        Route::get('/customers/{customer}', [CustomerController::class, 'show'])->whereNumber('customer')->name('dashboard.customers.show');
+
+        Route::get('/analytics', [AnalyticsController::class, 'index'])->name('dashboard.analytics');
+
+        Route::get('/payments', [PaymentController::class, 'edit'])->name('dashboard.payments.edit');
+        Route::put('/payments', [PaymentController::class, 'update'])->name('dashboard.payments.update');
+
+        Route::get('/settings', [SettingsController::class, 'show'])->name('dashboard.settings');
+        Route::put('/settings/profile', [SettingsController::class, 'updateProfile'])->name('dashboard.settings.profile');
+        Route::put('/settings/username', [SettingsController::class, 'updateUsername'])->middleware('throttle:10,1')->name('dashboard.settings.username');
+        Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->middleware('throttle:10,1')->name('dashboard.settings.password');
+        Route::get('/settings/export', [SettingsController::class, 'export'])->middleware('throttle:10,1')->name('dashboard.settings.export');
+        Route::delete('/settings/account', [SettingsController::class, 'destroy'])->middleware('throttle:5,1')->name('dashboard.settings.destroy');
     });
 
     Route::middleware(['has.store', 'admin'])->prefix('admin')->group(function () {

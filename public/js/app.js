@@ -95,6 +95,51 @@
     qty.addEventListener('input', update); qty.addEventListener('change', update);
   }
 
+  // Product page gallery: thumbnails swap the main photo
+  var galleryMain = document.querySelector('[data-gallery-main]');
+  $$('[data-gallery-thumb]').forEach(function (thumb) {
+    thumb.addEventListener('click', function () {
+      if (!galleryMain) return;
+      galleryMain.src = thumb.getAttribute('data-gallery-thumb');
+      $$('[data-gallery-thumb]').forEach(function (t) { t.setAttribute('aria-pressed', t === thumb ? 'true' : 'false'); });
+    });
+  });
+
+  // Multiple file inputs: show how many photos were picked
+  $$('input[type=file][data-count-label]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      var label = document.getElementById(input.getAttribute('data-count-label'));
+      if (!label || !input.files) return;
+      var n = input.files.length;
+      label.textContent = n ? n + (n === 1 ? ' photo selected' : ' photos selected') : 'Choose one or more photos.';
+    });
+  });
+
+  // Show/hide password
+  $$('[data-reveal]').forEach(function (btn) {
+    var input = document.getElementById(btn.getAttribute('data-reveal'));
+    if (!input) return;
+    btn.addEventListener('click', function () {
+      var show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+    });
+  });
+
+  // Typed confirmation: enable a destructive button only when the text matches
+  $$('[data-confirm-text]').forEach(function (input) {
+    var btn = document.getElementById(input.getAttribute('data-confirm-target'));
+    if (!btn) return;
+    var expected = input.getAttribute('data-confirm-text');
+    var sync = function () { btn.disabled = input.value.trim() !== expected; };
+    input.addEventListener('input', sync); sync();
+  });
+
+  // Range tabs that submit on change (analytics)
+  $$('select[data-autosubmit]').forEach(function (sel) {
+    sel.addEventListener('change', function () { if (sel.form) sel.form.submit(); });
+  });
+
   // Username preview on onboarding
   var uname = document.querySelector('[data-username]');
   if (uname) {

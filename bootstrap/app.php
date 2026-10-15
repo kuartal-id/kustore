@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureUserHasStore;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\RunPostDeployTasks;
 use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -17,6 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Security headers on every response, including errors and redirects.
         $middleware->append(SecurityHeaders::class);
+        // After a Hostinger Git deploy: run new migrations once (no SSH). No-op outside production.
+        $middleware->prepend(RunPostDeployTasks::class);
 
         $middleware->alias([
             'has.store' => EnsureUserHasStore::class,

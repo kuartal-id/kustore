@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('page_title', 'Store')
-@section('page_subtitle', 'Your profile, look and payment details.')
+@section('page_subtitle', 'Your profile, look and how you appear in search.')
 @section('page_actions')
     <a href="{{ $store->url() }}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">{{ icon('external-link', 'size-4') }} Preview</a>
 @endsection
@@ -111,11 +111,12 @@
         </fieldset>
     </section>
 
-    <section class="card card-pad">
-        <h2 class="text-base font-semibold">Payment instructions</h2>
-        <p class="mt-1 text-sm muted">Shown to customers right after they place an order. Payments are manual for now.</p>
-        <textarea id="payment_instructions" name="payment_instructions" rows="5" maxlength="2000" class="input mt-4" placeholder="Transfer to BCA 1234567890 a.n. Your Name, then send proof via WhatsApp 08xx with your order number.">{{ old('payment_instructions', $store->payment_instructions) }}</textarea>
-        <x-field-error name="payment_instructions" />
+    <section class="card card-pad flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h2 class="text-base font-semibold">Payments</h2>
+            <p class="mt-1 text-sm muted">Payment instructions, your QRIS code and WhatsApp number now live on the Payments page.</p>
+        </div>
+        <a href="{{ route('dashboard.payments.edit') }}" class="btn btn-secondary btn-sm">{{ icon('credit-card', 'size-4') }} Payment settings</a>
     </section>
 
     <section class="card card-pad">

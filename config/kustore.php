@@ -16,6 +16,16 @@ return [
 
     'currency' => env('KUSTORE_CURRENCY', 'IDR'),
 
+    // Public contact for help, privacy and account questions (support page, legal pages, app store listings).
+    'support_email' => env('KUSTORE_SUPPORT_EMAIL', 'hello@kuartal.id'),
+
+    // Native apps (mobile/). Store links appear on the site once set.
+    'apps' => [
+        'android_package' => 'id.kustore.app',
+        'play_store_url' => env('KUSTORE_PLAY_STORE_URL'),
+        'app_store_url' => env('KUSTORE_APP_STORE_URL'),
+    ],
+
     /*
     | Money is stored as integers in each currency's minor unit. IDR is used
     | without decimals in practice, so its exponent is 0 (Rp 150.000 => 150000).
@@ -43,6 +53,7 @@ return [
         'favicon', 'robots', 'sitemap', 'account', 'orders', 'products', 'links', 'me',
         'new', 'root', 'system', 'billing', 'payments', 'customers', 'analytics', 'security',
         'kuartalid', 'kuartal-id', 'kuartal_id', 'kustoreid', 'team', 'blog', 'docs', 'status',
+        'forgot-password', 'reset-password', 'app', 'apps', 'download', 'faq', 'features', 'well-known',
     ],
 
     'account_types' => [

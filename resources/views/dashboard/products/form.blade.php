@@ -113,6 +113,28 @@
             @if ($product->exists && $product->imageUrl())
                 <label class="mt-3 flex items-center gap-2 text-sm muted"><input type="checkbox" name="remove_image" value="1" class="checkbox"> Remove photo</label>
             @endif
+
+            @php $extras = $product->exists ? $product->images->where('is_main', false)->values() : collect(); @endphp
+            <div class="divider mt-5 pt-5">
+                <p class="font-display text-sm font-medium">More photos <span class="muted font-normal">· up to {{ \App\Http\Controllers\Dashboard\ProductController::MAX_IMAGES - 1 }}</span></p>
+                @if ($extras->isNotEmpty())
+                    <ul class="mt-3 grid grid-cols-3 gap-2">
+                        @foreach ($extras as $img)
+                            <li class="space-y-1.5">
+                                <img src="{{ $img->url() }}" alt="" class="aspect-square w-full rounded-xl object-cover">
+                                <label class="flex items-center gap-1.5 text-xs muted"><input type="radio" name="main_image_id" value="{{ $img->id }}" class="checkbox"> Main</label>
+                                <label class="flex items-center gap-1.5 text-xs muted"><input type="checkbox" name="remove_images[]" value="{{ $img->id }}" class="checkbox"> Remove</label>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+                <label class="btn btn-secondary btn-sm mt-3 w-full">{{ icon('image', 'size-4') }} Add photos
+                    <input type="file" name="images[]" accept="image/jpeg,image/png,image/webp" multiple class="sr-only" data-count-label="extra-photos-label">
+                </label>
+                <p id="extra-photos-label" class="help text-center">Choose one or more photos.</p>
+                <x-field-error name="images" />
+                <x-field-error name="images.*" />
+            </div>
         </section>
 
         <section class="card card-pad space-y-4">

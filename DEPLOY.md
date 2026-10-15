@@ -108,6 +108,13 @@ curl -sI https://kustore.id/ | grep -iE 'strict-transport|content-security|x-fra
 Redeploy the previous `main` commit in hPanel and put the backed-up `.env` back. It points at the old, untouched database.
 
 ## 4. Every later deploy
+
+**No SSH needed (since 2026-10-15).** Merge to `main`; Hostinger pulls it. The first web request after a deploy that
+brings new migrations, routes or config runs `migrate --force` once (and `optimize:clear` if Laravel caches exist),
+under a file lock: see `App\Support\Deployment` and the `RunPostDeployTasks` middleware. If it fails, visitors get a
+short "updating" message for a minute and it retries; the error is in `storage/logs`.
+
+Hostinger runs `composer install` itself on deploy (see the table above). The commands below are the manual fallback:
 ```bash
 cd ~/domains/kustore.id/public_html && PHP=/opt/alt/php84/usr/bin/php
 $PHP "$(command -v composer)" install --no-dev --optimize-autoloader --no-interaction

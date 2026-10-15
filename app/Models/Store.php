@@ -26,6 +26,7 @@ class Store extends Model
             'theme' => 'array',
             'is_published' => 'boolean',
             'is_suspended' => 'boolean',
+            'notify_new_orders' => 'boolean',
             'published_at' => 'datetime',
             'suspended_at' => 'datetime',
             'verification_level' => VerificationLevel::class,
@@ -86,6 +87,35 @@ class Store extends Model
     public function avatarUrl(): ?string
     {
         return $this->avatar_path ? Storage::disk('public')->url($this->avatar_path) : null;
+    }
+
+    public function qrisUrl(): ?string
+    {
+        return $this->payment_qris_path ? Storage::disk('public')->url($this->payment_qris_path) : null;
+    }
+
+    /** wa.me link to the seller's WhatsApp, optionally with a prefilled message. */
+    public function whatsappUrl(?string $text = null): ?string
+    {
+        if (! $this->whatsapp_number) {
+            return null;
+        }
+
+        return 'https://wa.me/'.$this->whatsapp_number.($text ? '?text='.rawurlencode($text) : '');
+    }
+
+    /** Normalise an Indonesian-style phone number to wa.me digits: 0812… / +62 812… → 62812…. */
+    public static function normaliseWhatsapp(?string $number): ?string
+    {
+        $digits = preg_replace('/\D/', '', (string) $number);
+        if ($digits === '') {
+            return null;
+        }
+        if (str_starts_with($digits, '0')) {
+            $digits = '62'.substr($digits, 1);
+        }
+
+        return $digits;
     }
 
     public function initials(): string

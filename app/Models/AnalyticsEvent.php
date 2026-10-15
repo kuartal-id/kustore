@@ -15,6 +15,16 @@ class AnalyticsEvent extends Model
 
     protected $fillable = ['store_id', 'type', 'store_link_id', 'product_id', 'visitor_hash', 'referrer_host'];
 
+    public function link(): BelongsTo
+    {
+        return $this->belongsTo(StoreLink::class, 'store_link_id');
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
+
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);

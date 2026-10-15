@@ -30,7 +30,7 @@ class StorefrontController extends Controller
     public function product(Request $request, string $username, string $slug): View
     {
         $store = self::visibleStore($username);
-        $product = $store->products()->active()->where('slug', $slug)->with('mainImage')->firstOrFail();
+        $product = $store->products()->active()->where('slug', $slug)->with('mainImage', 'images')->firstOrFail();
         $product->setRelation('store', $store);
         $this->analytics->record($request, $store, AnalyticsEvent::PRODUCT_VIEW, null, $product->id);
 

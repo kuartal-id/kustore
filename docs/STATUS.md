@@ -1,6 +1,6 @@
 # Kustore: status
 
-_Last updated: 2026-10-06 · branch `main`_
+_Last updated: 2026-10-15 · branch `ai/claude/kustore-v1-apps`_
 
 ## Current state
 A from-scratch Laravel 13 / PHP 8.4 rebuild that replaces the previous app (whose history is kept in git). It runs locally on SQLite
@@ -36,14 +36,29 @@ with demo data, and all feature tests pass.
   Default og:image `public/images/brand/kustore-og.png` (1200x630, light logo on ice) on the home page and storefronts without an avatar.
 - Tests: 90 PHPUnit tests (usernames, OIDC rejection paths, visibility, checkout/stock, policies, headers, uploads, auth).
 
+- **2026-10-15 (PR "Kustore v1: complete web app + Android/iOS apps"):**
+  - Dashboard: **Customers** (search, detail, CSV export with formula-injection guard), **Analytics** (7/30/90 days: views, visitors,
+    clicks, product views, orders, sales; daily SVG chart with table view; top links/products/referrers), **Payments** (instructions,
+    own QRIS image, WhatsApp number for payment proof, "email me on new orders"), **Settings** (name, username change, password change
+    for email accounts, JSON data export, account deletion with typed confirmation).
+  - Password reset for email accounts (local accounts only; never matches Kuartal ID users by email).
+  - Order emails: seller "new order" (can be turned off) and buyer "order received" with a signed link to the order page. Mail failures never break checkout.
+  - Order page shows the seller's QRIS and a "Send payment proof on WhatsApp" button.
+  - Products: up to six photos (main + five), gallery on the product page.
+  - Public: `/support` (help/FAQ, account deletion), `/sitemap.xml`, robots.txt, fuller privacy page, app section and FAQ on the home page.
+    Home hero example is Diemas Hawkins (@diemas) with his photo; it links to kustore.id/diemas once that store is published.
+  - Android/iOS apps in `mobile/` (Capacitor 7, `id.kustore.app`, target SDK 36), `public/js/native.js`, `/.well-known/assetlinks.json`
+    (placeholder fingerprint) and `/.well-known/apple-app-site-association` (placeholder Team ID). See `mobile/README.md` and `docs/STORE-KIT.md`.
+  - No-SSH deploys: new migrations run on the first request after a deploy (`App\Support\Deployment`).
+  - New migration `2026_10_15_000100_add_payment_and_contact_settings_to_stores`.
+
 ## Known gaps / stubs
 - **Full sign-in not yet tested end-to-end against the live Kuartal ID IdP.** The client is registered and `/auth/kuartal/redirect` sends a correct authorize request. Still needs a real sign-in.
-- Password reset for email accounts is not implemented (the `password_reset_tokens` table exists).
-- Outgoing mail is `log` by default. SMTP must be configured for verification emails.
-- Username changes, account deletion and data export are not built.
-- One image per product (the `product_images` table supports more).
+- Outgoing mail is `log` by default. SMTP must be configured for verification, password-reset and order emails.
+- Username change has no redirect from the old address.
 - Layout presets `creator`, `professional` and `editorial` map to `minimal`/`commerce`.
-- Customers, Analytics and Payments pages are "Coming soon" (data is already collected in `customers`, `analytics_events`, `payments`).
+- Online payment gateway not built yet (owner will add it); push notifications for the apps not built (needs Firebase).
+- Android/iOS builds not run in the sandbox (no Android SDK / Mac); see `mobile/README.md`.
 - Shipping cost is "arranged by seller" (`shipping_total` is always 0).
 - Terms and Privacy are drafts and need legal review.
 - Production DB: the old schema is incompatible. The plan is a fresh database (see `DEPLOY.md`). Old data, if any matters, is not migrated.
